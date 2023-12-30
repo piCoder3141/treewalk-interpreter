@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 public class Lox{
     public static void main(String[] args) throws IOException {
         if (args.length > 1){
-            System.out.println("At most one argument");
+            System.out.println("Usage: jlox [script]");
             System.exit(64);
         } else if (args.length == 1){
             runFile(args[0]);
@@ -19,12 +19,12 @@ public class Lox{
         }
     }
 
-    public static void runFile(String path) throws IOException {
+    private static void runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
     }
 
-    public static void runPrompt() throws IOException {
+    private static void runPrompt() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
 
@@ -36,7 +36,7 @@ public class Lox{
         }
     }
 
-    public static void run(String source){
-        System.out.println("Running!\n");
+    private static void run(String source){
+        Scanner scanner = new Scanner(source);
     }
 }
