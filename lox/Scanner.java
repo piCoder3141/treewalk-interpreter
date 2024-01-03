@@ -52,6 +52,9 @@ public class Scanner{
                       addToken((match('=')) ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
             case '<':
                       addToken((match('=')) ? TokenType.LESS_EQUAL : TokenType.LESS); break;
+            case '"': string(); break;
+            default:
+                        Lox.error(line, "Unexpected character."); break;
         }
     }
     
@@ -77,6 +80,23 @@ public class Scanner{
 
         current++;
         return true;
+    }
+
+    private void string(){
+        String str = "";
+        while(!isAtEnd() && peek() != '"'){
+            if (peek() == '\n') line++;
+            advance();
+        }
+        
+        if (isAtEnd()){
+            Lox.error(line, "Unterminated string.");
+            return;
+        }
+
+        // The closing ".
+        advance();
+        addToken(TokenType.STRING, source.substring(start+1, current-1));
     }
 }
 
